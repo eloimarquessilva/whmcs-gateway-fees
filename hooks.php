@@ -58,11 +58,20 @@ function update_gateway_fee2($vars)
         ->where('setting', 'name') // Filtra pelo setting 'name'
         ->get(['gateway', 'setting', 'value']) // Retorna as colunas 'gateway', 'setting', e 'value'
         ->toArray(); // Converte para array	
+    $textBeforeFee = Capsule::table('tbladdonmodules')
+        ->where('module', 'gateway_fees')
+        ->where('setting', 'text_before_fee_gateway_name')
+        ->value('value');
+
+    $textAfterFee = Capsule::table('tbladdonmodules')
+        ->where('module', 'gateway_fees')
+        ->where('setting', 'text_after_fee_gateway_name')
+        ->value('value');
 	
     Capsule::table('tblinvoiceitems')->insert([
         'invoiceid' => $invoiceId,
         'type' => 'Item',
-        'description' => 'Taxa ' . $gatewayData[0]->value,
+        'description' => "$textBeforeFee " . $gatewayData[0]->value . " $textAfterFee ($$fee1 + $fee2%)",
         'amount' => $totalFee,
         'taxed' => 0,
         'notes' => 'gateway_fees'
