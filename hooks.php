@@ -52,10 +52,19 @@ function update_gateway_fee2($vars)
 
     $totalFee = $fee1 + ($fee2 / 100) * $invoice->subtotal;
 
+    // Consulta para obter o dado do setting 'name' para o método de pagamento
+    $gatewayData = Capsule::table('tblpaymentgateways')
+        ->where('gateway', $paymentMethod)
+        ->where('setting', 'name') // Filtra pelo setting 'name'
+        ->get(['gateway', 'setting', 'value']) // Retorna as colunas 'gateway', 'setting', e 'value'
+        ->toArray(); // Converte para array	
+	
+	//print_r($gatewayData);die;
+	
     Capsule::table('tblinvoiceitems')->insert([
         'invoiceid' => $invoiceId,
         'type' => 'Item',
-        'description' => 'Gateway Fee',
+        'description' => 'Taxa ' . $gatewayData[0]->value,
         'amount' => $totalFee,
         'taxed' => 0,
         'notes' => 'gateway_fees'
