@@ -59,8 +59,6 @@ function update_gateway_fee2($vars)
         ->get(['gateway', 'setting', 'value']) // Retorna as colunas 'gateway', 'setting', e 'value'
         ->toArray(); // Converte para array	
 	
-	//print_r($gatewayData);die;
-	
     Capsule::table('tblinvoiceitems')->insert([
         'invoiceid' => $invoiceId,
         'type' => 'Item',
