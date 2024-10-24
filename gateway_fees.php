@@ -25,6 +25,18 @@ function gateway_fees_config()
                 "Description" => "Choose to delete the module's SQL table when the module is deactivated.",
                 "Default" => "No"
             ),
+            "text_before_fee_gateway_name" => array(
+                "FriendlyName" => "Text before fee gateway name",
+                "Type" => "text",
+                "Description" => "Enter the text that will appear before the gateway name in the fee description..",
+                "Default" => "Fee"
+            ),
+            "text_after_fee_gateway_name" => array(
+                "FriendlyName" => "Text after fee gateway name",
+                "Type" => "text",
+                "Description" => "Enter the text that will appear after the gateway name in the fee description..",
+                "Default" => "Fee"
+            ),
         )
     );
 
